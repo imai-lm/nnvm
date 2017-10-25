@@ -14,8 +14,8 @@ class Renamer(object):
     def __init__(self, new_name):
         self._new_name = new_name
 
-    def __call__(self, attrs):
-        return self._new_name, attrs
+    def __call__(self, inputs, attrs):
+        return self._new_name, inputs, attrs
 
 
 class AttrConverter(object):
@@ -61,7 +61,7 @@ class AttrConverter(object):
         self._extras = extras if extras else {}
         self._custom_check = custom_check
 
-    def __call__(self, attrs):
+    def __call__(self, inputs, attrs):
         # apply custom check
         if self._custom_check:
             func, msg = self._custom_check
@@ -97,7 +97,7 @@ class AttrConverter(object):
                 new_attrs[k] = attrs[k]
         # add extras
         new_attrs.update(self._extras)
-        return op_name, new_attrs
+        return op_name, inputs, new_attrs
 
     def _parse_default(self, target):
         """Helper function to parse default values."""
