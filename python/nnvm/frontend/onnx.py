@@ -109,7 +109,7 @@ def _gemm():
         # 1st argument must be transposed if transA
         newA = _sym.transpose(inputs[0]) if transA else inputs[0]
         # 2nd argument must be transposed unless transB
-        newB = _sym.transpose(inputs[1]) if transB else inputs[1]
+        newB = _sym.transpose(inputs[1]) if not transB else inputs[1]
 
         return 'dense', [newA, newB, inputs[2]], {'use_bias': True}
     return _impl
