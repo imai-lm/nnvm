@@ -110,7 +110,6 @@ def _gemm():
         newA = _sym.transpose(inputs[0]) if transA else inputs[0]
         # 2nd argument must be transposed unless transB
         newB = _sym.transpose(inputs[1]) if not transB else inputs[1]
-
         return 'dense', [newA, newB, inputs[2]], {'use_bias': True}
     return _impl
 
@@ -290,7 +289,7 @@ class GraphProto(object):
             g = _graph.create(self._nodes[inputs[1]])
             shape_dict = {k: v.shape for k, v in self._params.items()}
             _, out_shapes = graph_util.infer_shape(g, **shape_dict)
-            channels = out_shapes[0][0]
+            channels = out_shapes[0][1]
         else:
             weight_name = self._renames[inputs[1]]
             if weight_name not in self._params:
