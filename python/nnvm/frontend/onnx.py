@@ -56,7 +56,7 @@ def _infer_channels(inputs, params):
     g = _graph.create(inputs)
     shape_dict = {k: v.shape for k, v in params.items()}
     _, out_shapes = graph_util.infer_shape(g, **shape_dict)
-    channels = out_shapes[0][0]
+    channels = out_shapes[0][1]
     return channels
 
 def _elemwise(name):
@@ -146,7 +146,7 @@ def _gemm():
         transB = int(attr.get('transB', 0))
         if transA:
             inputs[0] = _sym.transpose(inputs[0], axes=(1, 0))
-        if transB:
+        if not transB:
             inputs[1] = _sym.transpose(inputs[1], axes=(1, 0))
         return _sym.dense(alpha * inputs[0], inputs[1], beta * inputs[2], units=channels)
     return _impl

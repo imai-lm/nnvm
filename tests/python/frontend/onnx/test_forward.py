@@ -43,3 +43,4 @@ def verify_squeezenet1_1():
 
 if __name__ == '__main__':
     verify_super_resolution_example()
+    verify_squeezenet1_1()
